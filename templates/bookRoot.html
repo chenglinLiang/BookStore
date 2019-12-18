@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="accordion" id="accordionExample">
+{% for book in books %}
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          ISBN：{{ book[2] }}&nbsp;&nbsp;Bookname：《{{ book[0] }}》
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+          <h6>writer&nbsp;：&nbsp;{{ book[1] }}</h6>
+          <h6>publish &nbsp;：&nbsp;{{ book[3] }}</h6>
+          <h6>price&nbsp;：&nbsp;{{ book[4] }}</h6>
+          <h6>discount &nbsp;：&nbsp;{{ book[5] }}</h6>
+          <h6>contents&nbsp;：&nbsp;{{ book[6] }}</h6>
+          <h6>inventory&nbsp;：&nbsp;{{ book[7] }}</h6>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}

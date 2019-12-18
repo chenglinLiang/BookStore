@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="accordion" id="accordionExample">
+{% for user in users %}
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          User&nbsp;&nbsp;{{ user[0] }}
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+          <h6>id&nbsp;：&nbsp;{{ user[1] }}</h6>
+          <h6>book &nbsp;：&nbsp;《{{ user[4] }}》</h6>
+          <h6>ISBN&nbsp;：&nbsp;{{ user[5] }}</h6>
+          <h6>stats &nbsp;：&nbsp;{{ user[2] }}</h6>
+          <h6>pay &nbsp;：&nbsp;{{ user[3] }}</h6>
+          <h6>price&nbsp;：&nbsp;{{ user[6] }}</h6>
+          <h6>send &nbsp;：&nbsp;{{ user[7] }}</h6>
+          <h6>take&nbsp;：&nbsp;{{ user[8] }}</h6>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}

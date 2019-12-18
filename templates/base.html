@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}-BookStore</title>
+    <link rel="icon" href="{{ url_for('static', filename='image/book.ico') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{{ url_for('index') }}">商店</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('order') }}">My orders<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('comments') }}">用户论坛</a>
+      </li>
+      <li class="nav-item">
+          {% if username %}
+          <a href="#" class="nav-link">{{ username }}</a>
+          {% else %}
+          <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+          {% endif %}
+      </li>
+      <li class="nav-item">
+          {% if username %}
+              <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+          {% else %}
+              <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+          {% endif %}
+      </li>
+      <li class="nav-item dropdown">
+        {% if username=='root' %}
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Background
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{ url_for('userRoot') }}">User</a>
+              <a class="dropdown-item" href="{{ url_for('bookRoot') }}">Book</a>
+              <a class="dropdown-item" href="{{ url_for('comments') }}">Comment</a>
+              <a class="dropdown-item" href="#">Complain</a>
+            </div>
+        {% endif %}
+      </li>
+{#      <li class="nav-item">#}
+{#          {% if username %}#}
+{#              <a href="{{ url_for('cancel', username=username) }}" class="nav-link">Log off</a>#}
+{#          {% endif %}#}
+{#      </li>#}
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action="{{ url_for('search') }}" method="get">
+      <input class="form-control mr-sm-2" type="search" placeholder="keyword" aria-label="Search" name="keyword">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+{% block header %}{% endblock %}
+<div class="container">
+    {% block main %}{% endblock %}
+</div>
+
+</body>
+</html>

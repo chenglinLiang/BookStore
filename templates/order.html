@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Order{% endblock %}
+{% block main %}
+<header>
+    <h1 class="text-center display-4">
+        <small class="text-muted sub-title">My orders</small>
+    </h1>
+</header>
+
+<div class="accordion" id="accordionExample">
+  {% for order in orders %}
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: green">
+          订单号:{{ order[0] }}
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+          <h6>订单状态:
+              {% if order[1] == 1 %}
+              成功
+              {% else %}
+              失败
+              {% endif %}
+          </h6>
+          <h6>支付成功:
+              {% if order[1] == 1 %}
+              是
+              {% else %}
+              否
+              {% endif %}
+          </h6>
+          {% for log in logistics %}
+          <h6>已发货：
+              {% if log[1] == 1 %}
+              是
+              {% else %}
+              否
+              {% endif %}
+          </h6>
+          <h6>
+              已收货：
+              {% if log[2] == 1 %}
+              是
+              {% else %}
+              否
+              {% endif %}
+          </h6>
+          <h6>物流信息</h6>
+          <span class="badge badge-pill badge-success">{{ log[3] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ log[4] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ log[5] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ log[6] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ log[7] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ log[8] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ log[9] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ log[10] }}</span><br>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+
+{% endblock %}

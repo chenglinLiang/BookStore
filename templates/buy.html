@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Buy{% endblock %}
+{% block main %}
+    <div>
+        <img src="{{ url_for('static', filename='image/demo.jpg') }}" class="d-block w-100" alt="demo"><br>
+    </div>
+    <div class="buy">
+        <h2>《{{ book[0] }}》</h2>
+        <span class="badge badge-info">{{ book[2] }}</span>&nbsp;&nbsp;&nbsp;
+        <span class="badge badge-secondary">{{ book[3] }}</span><br><br>
+        <h3>¥<span class="badge badge-pill badge-danger">{{ book[1] }}</span></h3>
+    </div>
+<form class="formBuy">
+  <div class="form-group" type="pos">
+    <label for="exampleFormControlInput1">Telephone</label>
+    <input type="text" class="form-control" name="telephone">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Example select</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+        <option>Alipay</option>
+        <option>WeChat Pay</option>
+        <option>Cash on delivery</option>
+    </select>
+  </div>
+    <div class="form-group" type="pos">
+    <label for="exampleFormControlInput1">Address</label>
+    <input type="text" class="form-control" name="telephone">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Notes to seller</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+  <a class="btn btn-primary btn-block" href="{{ url_for('addOrder', ISBN=ISBN, username=username) }}" role="button">Buy!</a></form>
+{% endblock %}

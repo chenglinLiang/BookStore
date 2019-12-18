@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block main %}
+<header>
+    <h1 class="text-center display-4">
+        <small class="text-muted sub-title">Register</small>
+    </h1>
+</header>
+<form class="formLog" method="POST">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Username</label>
+    <input type="text" class="form-control" name="username">
+    <small  class="form-text text-muted">You can use telephone to register.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" name="password">
+  </div>
+  <button type="submit" class="btn btn-primary btn-block">Submit</button>
+</form>
+{% endblock %}

@@ -1,0 +1,43 @@
+.container{
+    max-width: 900px !important;
+}
+
+body{
+    background-color: white !important;
+}
+
+header {
+    margin: 50px 0 40px 0;
+}
+
+header h1 {
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.formLog {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.carousel {
+    max-height: 400px;
+    /*max-width: 700px;*/
+    margin: 0 auto;
+}
+
+img {
+    max-width: 35%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.buy {
+    text-align: center;
+}
+
+.formBuy {
+    max-width: 450px;
+    margin: 0 auto;
+}
+
