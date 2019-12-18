@@ -42,7 +42,9 @@ conn.commit()
 sql = '''select * from user
 '''
 cursor.execute(sql)
-conn.commit()
+results = conn.fetchall()
+for result in results:
+    print(result)
 ~~~
 带参数的sql语句及类的实现参照'db.py',同时有faker批量生成假数据的应用
 
