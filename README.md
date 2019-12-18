@@ -1,5 +1,5 @@
 # BookStore
-## It is a web site for BookStore online
+## It is a Website for BookStore online
 
 python连接Mysql需要第三方库pymysql，连接sqlserver需要第三方库pymssql
 
