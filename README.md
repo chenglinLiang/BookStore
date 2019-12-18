@@ -6,6 +6,10 @@ python连接Mysql需要第三方库pymysql，连接sqlserver需要第三方库py
 在windows下，python3.5以上不能通过pip直接安装pymssql，需要安装编译好的whl文件
 
 下载对应whl文件，使用pip直接安装
+首先使用cmd进入whl所在目录,例如在D盘中
+~~~Bash
+cd d:
+~~~
 ~~~Bash
 pip install pymssql-2.1.4.dev5-cp37-cp37m-win_amd64.whl
 ~~~
