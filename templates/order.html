@@ -8,63 +8,55 @@
 </header>
 
 <div class="accordion" id="accordionExample">
-  {% for order in orders %}
+{% for order in orders %}
   <div class="card">
     <div class="card-header" id="headingOne">
       <h2 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: green">
-          订单号:{{ order[0] }}
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          id&nbsp;&nbsp;{{ order[0] }}
         </button>
       </h2>
     </div>
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
       <div class="card-body">
-          <h6>订单状态:
-              {% if order[1] == 1 %}
-              成功
+          <h6>Stats:
+              {% if order[2]==1 %}
+              Yes
               {% else %}
-              失败
+              No
               {% endif %}
           </h6>
-          <h6>支付成功:
-              {% if order[1] == 1 %}
-              是
+          <h6>book&nbsp;:&nbsp;《{{ order[1] }}》</h6>
+          <h6>price&nbsp;:&nbsp;{{ order[3] }}</h6>
+          <h6>Send:
+              {% if order[4]==1 %}
+              Yes
               {% else %}
-              否
+              No
               {% endif %}
           </h6>
-          {% for log in logistics %}
-          <h6>已发货：
-              {% if log[1] == 1 %}
-              是
+          <h6>Take:
+              {% if order[5]==1 %}
+              Yes
               {% else %}
-              否
+              No
               {% endif %}
           </h6>
-          <h6>
-              已收货：
-              {% if log[2] == 1 %}
-              是
-              {% else %}
-              否
-              {% endif %}
-          </h6>
-          <h6>物流信息</h6>
-          <span class="badge badge-pill badge-success">{{ log[3] }}</span><br>
-          <span class="badge badge-pill badge-success">{{ log[4] }}</span><br>
-          <span class="badge badge-pill badge-success">{{ log[5] }}</span><br>
-          <span class="badge badge-pill badge-success">{{ log[6] }}</span><br>
-          <span class="badge badge-pill badge-success">{{ log[7] }}</span><br>
-          <span class="badge badge-pill badge-success">{{ log[8] }}</span><br>
-          <span class="badge badge-pill badge-success">{{ log[9] }}</span><br>
-          <span class="badge badge-pill badge-success">{{ log[10] }}</span><br>
-          {% endfor %}
+          <h6>Logistic:</h6>
+          <span class="badge badge-pill badge-success">{{ order[6] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ order[7] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ order[8] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ order[9] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ order[10] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ order[11] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ order[12] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ order[13] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ order[14] }}</span><br>
       </div>
     </div>
   </div>
-  {% endfor %}
-
+{% endfor %}
 </div>
 
 {% endblock %}

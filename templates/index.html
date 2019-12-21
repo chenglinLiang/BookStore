@@ -45,7 +45,7 @@
 <div>
 <ul class="list-group list-group-item-light">
     {% for book in books %}
-        <li class="list-group-item d-flex justify-content-between align-items-center"><a href="{{ url_for('buy', ISBN=book[4]) }}" style="color: black">《{{ book[0] }}》</a>
+        <li class="list-group-item d-flex justify-content-between align-items-center"><a href="{{ url_for('buy', ISBN=book[4]) }}" style="color: black">《{{ book[0] }}》</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="badge badge-info">{{ book[2] }}</span>
         <span class="badge badge-secondary">{{ book[3] }}</span>
         <span class="badge badge-danger badge-pill">{{ book[1] }}</span>

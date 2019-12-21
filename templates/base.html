@@ -13,7 +13,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{{ url_for('index') }}">商店</a>
+  <a class="navbar-brand" href="{{ url_for('index') }}">Store</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -24,7 +24,7 @@
         <a class="nav-link" href="{{ url_for('order') }}">My orders<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('comments') }}">用户论坛</a>
+        <a class="nav-link" href="{{ url_for('comments') }}">Comments</a>
       </li>
       <li class="nav-item">
           {% if username %}
@@ -40,24 +40,23 @@
               <a class="nav-link" href="{{ url_for('register') }}">Register</a>
           {% endif %}
       </li>
+      {% if username=='root' %}
       <li class="nav-item dropdown">
-        {% if username=='root' %}
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Background
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{{ url_for('userRoot') }}">User</a>
+              <a class="dropdown-item" href="{{ url_for('root') }}">User</a>
               <a class="dropdown-item" href="{{ url_for('bookRoot') }}">Book</a>
-              <a class="dropdown-item" href="{{ url_for('comments') }}">Comment</a>
-              <a class="dropdown-item" href="#">Complain</a>
+              <a class="dropdown-item" href="{{ url_for('commentRoot') }}">Comment</a>
+              <a class="dropdown-item" href="{{ url_for('complainRoot') }}">Complain</a>
+              <a class="dropdown-item" href="#">Userbuy</a>
+              <a class="dropdown-item" href="#">Userbrowsing</a>
             </div>
-        {% endif %}
       </li>
-{#      <li class="nav-item">#}
-{#          {% if username %}#}
-{#              <a href="{{ url_for('cancel', username=username) }}" class="nav-link">Log off</a>#}
-{#          {% endif %}#}
-{#      </li>#}
+      {% elif username=='fast' %}
+          <li class="nav-item"><a href="{{ url_for('fast') }}" class="nav-link">Logistics</a></li>
+      {% endif %}
     </ul>
     <form class="form-inline my-2 my-lg-0" action="{{ url_for('search') }}" method="get">
       <input class="form-control mr-sm-2" type="search" placeholder="keyword" aria-label="Search" name="keyword">

@@ -18,15 +18,15 @@ def index():
 @login_required
 def order():
     username = g.username
-    orders = BookStore.select_order(username)
-    logistics = BookStore.select_logistics(username)
-    return render_template('order.html', orders=orders, logistics=logistics)
+    orders = BookStore.selectOrder(username)
+    return render_template('order.html', orders=orders)
 
 
 @app.route('/comments')
 def comments():
-    comments = BookStore.showComments()
-    return render_template('comments.html', comments=comments)
+    comments = BookStore.selectComment()
+    complains = BookStore.selectComplain()
+    return render_template('comments.html', comments=comments,  complains=complains)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -57,18 +57,11 @@ def register():
     else:
         username = request.form.get('username')
         password = request.form.get('password')
-        # print(username, password)
         if BookStore.select_user(username):
             return u'该用户已存在'
         else:
             BookStore.insert_user(username, password)
             return redirect(url_for('login'))
-
-
-# @app.route('/cancel/<username>')
-# def cancel(username):
-#     BookStore.delUser(username)
-#     return render_template('index.html')
 
 
 @app.route('/search')
@@ -78,18 +71,27 @@ def search():
     return render_template('index.html', books=books)
 
 
-@app.route('/buy/<ISBN>')
+@app.route('/buy/<ISBN>', methods=['GET','POST'])
 @login_required
 def buy(ISBN):
-    book = BookStore.selectISBN(ISBN)
-    return render_template('buy.html', book=book, ISBN=ISBN)
+    if request.method == 'GET':
+        book = BookStore.selectISBN(ISBN)
+        return render_template('buy.html', book=book, ISBN=ISBN)
+    else:
+        username = g.username
+        telephone = request.form.get('telephone')
+        address = request.form.get('address')
+        note = request.form.get('note')
+        print('telephone')
+        BookStore.insertOrder(ISBN,username,telephone,address,note)
+        return redirect(url_for('order'))
 
 
-@app.route('/addOrder/<ISBN>')
-def addOrder(ISBN):
-    print('addOrder:', ISBN)
-    BookStore.insertOrder(ISBN, g.username)
-    return redirect(url_for('order'))
+# @app.route('/addOrder/<ISBN>')
+# def addOrder(ISBN):
+#     print('addOrder:', ISBN)
+#     BookStore.insertOrder(ISBN, g.username)
+#     return redirect(url_for('order'))
 
 
 @app.before_request
@@ -108,10 +110,10 @@ def content_processor():
     return {}
 
 
-@app.route('/userRoot')
-def userRoot():
-    results = BookStore.selectUserRoot()
-    return render_template('userRoot.html', users=results)
+@app.route('/root')
+def root():
+    results = BookStore.selectRoot()
+    return render_template('root.html', users=results)
 
 
 @app.route('/bookRoot')
@@ -119,10 +121,23 @@ def bookRoot():
     results = BookStore.selectBookUser()
     return render_template('bookRoot.html', books=results)
 
+
+@app.route('/commmentRoot')
+def commentRoot():
+    results = BookStore.selectComment()
+    return render_template('commentRoot.html', comments=results)
+
+
 @app.route('/complainRoot')
 def complainRoot():
     results = BookStore.selectComplain()
-    return render_template('complainRoot.html')
+    return render_template('complainRoot.html', complains=results)
+
+
+@app.route('/fast')
+def fast():
+    results = BookStore.selectLogistics()
+    return render_template('fast.html', logistics=results)
 
 @app.errorhandler(404)
 def error404(error_info):

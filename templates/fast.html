@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="accordion" id="accordionExample">
+{% for logistic in logistics %}
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          id&nbsp;&nbsp;{{ logistic[0] }}
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+          <h6>Send:
+              {% if logistic[1]==1 %}
+              Yes
+              {% else %}
+              No
+              {% endif %}
+          </h6>
+        <h6>Take:
+              {% if logistic[2]==1 %}
+              Yes
+              {% else %}
+              No
+              {% endif %}
+          </h6>
+        <h6>Username:{{ logistic[3] }}</h6>
+        <h6>Telephone:{{ logistic[4] }}</h6>
+        <h6>Address:{{ logistic[5] }}</h6>
+          <h6>物流信息</h6>
+          <span class="badge badge-pill badge-success">{{ logistic[6] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ logistic[7] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ logistic[8] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ logistic[9] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ logistic[10] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ logistic[11] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ logistic[12] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ logistic[13] }}</span><br>
+          <span class="badge badge-pill badge-success">{{ logistic[14] }}</span><br>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endblock %}

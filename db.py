@@ -1,8 +1,9 @@
-import pymysql      #mysql 连接数据库
-import pymssql      #sql server 连接数据库
+import pymysql  # mysql 连接数据库
+# import pymssql      #sql server 连接数据库
 from faker import Faker
 
 
+# 3 db = BookStore()
 class BookStore:
     # MySQL连接数据库
     def __init__(self):
@@ -15,6 +16,7 @@ class BookStore:
             charset='utf8'
         )
         self.curosr = self.conn.cursor()
+
     # sqlserver连接数据库
     '''
     def __init__(self):
@@ -107,7 +109,7 @@ class BookStore:
         self.conn.commit()
 
     def faker(self):
-        f = Faker(locale="zh_CN")
+        f = Faker(locale="zh_CN")  #实例
         count = 0
         for i in range(1000):
             # user
@@ -188,7 +190,7 @@ class BookStore:
         print('成功', count, '次')
 
     def selectBook(self, keyword):
-        sql = '''select bookname,price,writer,publish from book
+        sql = '''select bookname,price,writer,publish from books
                     where bookname like %s or writer like %s or ISBN like %s or publish like %s
                 '''
         self.curosr.execute(sql, ('%' + keyword + '%', '%' + keyword + '%', '%' + keyword + '%', '%' + keyword + '%'))
@@ -197,13 +199,13 @@ class BookStore:
 
     def showBook(self):
         sql = '''select bookname,price,writer,publish,ISBN
-                    from book
+                    from books
              '''
         self.curosr.execute(sql)
         results = list(self.curosr.fetchall())
         return results
 
-    def showComments(self):
+    def selectComment(self):
         sql = '''select username,comm
                     from comment
         '''
@@ -237,12 +239,12 @@ class BookStore:
         result = self.curosr.fetchall()
         return result
 
-    def select_order(self, username):
-        sql = '''select * from orders
-                    where buyer=%s
+    def selectOrder(self, username):
+        sql = '''select id, bookname,stats, price, send, take, place1, place2, place3,place4,place5,place6,place7,place8,place9 from root
+                    where username=%s
         '''
         self.curosr.execute(sql, username)
-        results = list(self.curosr.fetchall())
+        results = self.curosr.fetchall()
         return results
 
     def select_logistics(self, username):
@@ -258,7 +260,7 @@ class BookStore:
 
     def selectISBN(self, ISBN):
         sql = '''select bookname, price, writer, publish
-                from book
+                from books
                 where ISBN=%s
         '''
         self.curosr.execute(sql, ISBN)
@@ -273,22 +275,31 @@ class BookStore:
         username = self.curosr.fetchall()
         return username[0][0]
 
-    def insertOrder(self, ISBN, username):
-        f = Faker(locale="zh_CN")
+    def insertOrder(self, ISBN, username, telephone, address, note):
+        f = Faker("zh_CN")
         sql = '''insert into
-                    orders(id, stats, pay, book, buyer) 
-                    VALUES (%s, %s, %s, %s, %s)
+                    orders(id, stats, pay, book, buyer, telephone, address, note) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         '''
-        print('insertOrder', ISBN, username)
         try:
-            f.pystr()
-            self.curosr.execute(sql, (id, 1, 1, ISBN, username))
+            id = f.pystr()
+            stats = 1
+            pay = 1
+            self.curosr.execute(sql, (id, stats, pay, ISBN, username, telephone, address, note))
             self.conn.commit()
+            self.insertLogistics(id)
         except pymysql.err.IntegrityError:
-            pass
+            self.conn.rollback()
 
-    def selectUserRoot(self):
-        sql = '''select * from userroot
+    def insertLogistics(self, id):
+        sql = '''insert into logistics(id, send, take)
+                    values (%s,%s,%s)
+        '''
+        self.curosr.execute(sql, (id, 1, 0))
+        self.conn.commit()
+
+    def selectRoot(self):
+        sql = '''select * from root
         '''
         self.curosr.execute(sql)
         results = self.curosr.fetchall()
@@ -302,29 +313,40 @@ class BookStore:
         return results
 
     def selectComplain(self):
-        sql = '''select * from complain
+        sql = '''select username, comp from complain
         '''
         self.curosr.execute(sql)
         results = self.curosr.fetchall()
         return results
 
+    # def selectCommentRoot(self):
+    #     sql = '''select username, comm from comment
+    #     '''
+    #     self.curosr.execute(sql)
+    #     results = self.curosr.fetchall()
+    #     return results
 
-# def delUser(self, username):
-#     sql = '''set foreign_key_checks = 0
-#     '''
-#     self.curosr.execute(sql)
-#     sql = '''delete from user
-#                 where username=%s
-#     '''
-#     self.curosr.execute(sql, username)
-#     self.conn.commit()
+    def selectLogistics(self):
+        sql = '''select * from fast
+        '''
+        self.curosr.execute(sql)
+        results = self.curosr.fetchall()
+        return results
 
-def __del__(self):
-    self.curosr.close()
-    self.conn.close()
+    # def delUser(self, username):
+    #     sql = '''set foreign_key_checks = 0
+    #     '''
+    #     self.curosr.execute(sql)
+    #     sql = '''delete from user
+    #                 where username=%s
+    #     '''
+    #     self.curosr.execute(sql, username)
+    #     self.conn.commit()
+
+    def __del__(self):
+        self.curosr.close()
+        self.conn.close()
 
 # if __name__ == '__main__':
 #     db = BookStore()
-#     result = db.selectUserRoot()
-#     # for i in result:
-#     print(result)
+#     BookStore.
