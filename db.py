@@ -109,7 +109,7 @@ class BookStore:
         self.conn.commit()
 
     def faker(self):
-        f = Faker(locale="zh_CN")  #实例
+        f = Faker(locale="zh_CN")  # 实例
         count = 0
         for i in range(1000):
             # user
@@ -288,8 +288,15 @@ class BookStore:
             self.curosr.execute(sql, (id, stats, pay, ISBN, username, telephone, address, note))
             self.conn.commit()
             self.insertLogistics(id)
+            self.updateInventory(ISBN)
         except pymysql.err.IntegrityError:
             self.conn.rollback()
+
+    def updateInventory(self, ISBN):
+        sql = '''update book set inventory=inventory-1 where ISBN=%s
+        '''
+        self.curosr.execute(sql, ISBN)
+        self.conn.commit()
 
     def insertLogistics(self, id):
         sql = '''insert into logistics(id, send, take)
@@ -319,13 +326,6 @@ class BookStore:
         results = self.curosr.fetchall()
         return results
 
-    # def selectCommentRoot(self):
-    #     sql = '''select username, comm from comment
-    #     '''
-    #     self.curosr.execute(sql)
-    #     results = self.curosr.fetchall()
-    #     return results
-
     def selectLogistics(self):
         sql = '''select * from fast
         '''
@@ -333,20 +333,10 @@ class BookStore:
         results = self.curosr.fetchall()
         return results
 
-    # def delUser(self, username):
-    #     sql = '''set foreign_key_checks = 0
-    #     '''
-    #     self.curosr.execute(sql)
-    #     sql = '''delete from user
-    #                 where username=%s
-    #     '''
-    #     self.curosr.execute(sql, username)
-    #     self.conn.commit()
-
     def __del__(self):
         self.curosr.close()
         self.conn.close()
 
 # if __name__ == '__main__':
 #     db = BookStore()
-#     BookStore.
+#     BookStore.insert_faker()
